@@ -1,0 +1,1 @@
+# lab8_R-st-mli_Nurlan
