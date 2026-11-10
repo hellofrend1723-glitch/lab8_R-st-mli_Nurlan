@@ -1,0 +1,174 @@
+A1:
+	code:
+		def greet(name, greeting="Salam"):
+			print(greeting + ", " + name + "!")
+		greet("Aysel")
+		greet("Kamran", "Xosh gəldin")
+		greet(greeting="Sabahınız xeyir", name="Nigar")
+	output:
+		Salam, Aysel!
+		Xosh gəldin, Kamran!
+		Sabahınız xeyir, Nigar!
+	report:
+		1st call (greet("Aysel")):
+			we only write one word ("Aysel"). Python automatically puts this into the first box (name). Because we didn't write a second word, it uses the default word "Salam".
+		2nd call (greet("Kamran", "Xosh gəldin")):
+			we write two words the first word goes to name ("Kamran"), and the second word goes to greeting ("Xosh gəldin"). It uses instead of the default "Salam".
+		3rd call (greet(greeting="Sabahınız xeyir", name="Nigar")):
+			Python understands that name is Nigar and greeting is Sabahınız xeyir.
+A2:
+	code:
+		def square(n):
+			return n * n
+		def show_square(n):
+			print(n * n)
+		a = square(4)
+		b = show_square(4)
+		print(a)
+		print(b)
+	output:
+		16
+		16
+		None
+	report:
+		1st call square(4):
+			first def just can set value 16 for a , and at the end print value of a
+		2nd call show_square(4):
+			second def set print value 16 but doesn't get value for b so at the end print "None"
+A3:
+	code:
+		def add_item(items, item):
+			items.append(item)
+		def add_item_copy(items, item):
+			new_items = items[:]
+			new_items.append(item)
+			return new_items
+		basket = ["bread"]
+		add_item(basket, "milk")
+		other = add_item_copy(basket, "cheese")
+		print(basket)
+		print(other)
+	output:
+		['bread', 'milk']
+		['bread', 'milk', 'cheese']
+	report:
+		1st call add_item(basket, "milk"):		
+			first def append "milk" to "basket" so at the end print ['bread', 'milk'] 
+		2n call add_item_copy(basket, "cheese"):
+			second def creat new list. but this list has "bread" ,"milk" and append "cheese" to it and set value to "other" list so at the end print ['bread', 'milk', 'cheese']
+Hissə B:
+	Tapsiriq 1:
+		def print_student_card(name, group, year):
+    			print("Name:", name)
+    			print("Group:", group)
+    			print("Year:", year)
+		# 1. Positional arguments (position is important)
+		print_student_card("Aysel Mammadova", "CE-101", 1)
+		# 2. Keyword arguments (position isn't important)
+		print_student_card(year=2, name="Kamran Aliyev", group="CE-201")
+		# 3. Wrong call (only two arguments)
+		# print_student_card("Ömər", "CE-301")
+	Tapsiriq 2:
+		code:
+			def add_vat(price, vat_percent=18):
+    				return price + price * vat_percent / 100
+			print(add_vat(100))                      # 118.0
+			print(add_vat(50, 10))                   # 55.0
+			print(add_vat(vat_percent=5, price=80))  # 84.0	
+			price is required. You must give it.
+		report:
+			vat_percent=18 has a default value. If you do not give it, Python uses 18.
+			The function uses return, so it gives the new price back and does not print it. That is why we use print(...) outside the def
+	Tapsiriq 5:
+		code:
+		def add_bonus(scores, bonus):
+    			for i in range (len(scores)):
+        			scores[i]=scores[i]+bonus
+        			if scores[i]>100:
+            				scores[i]=100
+		def with_bonus(scores, bonus):
+    			a=scores[:]
+    			for i in range (len(a)):
+        			a[i]=a[i]+bonus
+        			if a[i]>100:
+            				a[i]=100
+   			return a      
+		scores = [70, 95, 88, 100]
+		print(with_bonus(scores, 10))
+		print(scores)
+		add_bonus(scores[:], 10)
+		print(scores)
+		add_bonus(scores, 10)
+		print(scores)
+		report:
+			print(with_bonus(scores, 10)) prints the new list [80, 100, 98, 100]. This function makes a new list, so scores is safe.
+			print(scores) still shows [70, 95, 88, 100]. The original was not changed.
+			add_bonus(scores[:], 10) changes only a copy. So the next print(scores) still shows the old values.
+			add_bonus(scores, 10) changes the real list. So the last print(scores) shows [80, 100, 98, 100].	
+	Tapsiriq 7:
+#2		
+def add_vat(price, vat_percent=18):
+    return price + price * vat_percent / 100
+#3
+def build_username(first, last, year=""):
+    if year:
+        year = str(year)
+    return first.lower() + "." + last.lower() + year
+#5
+def add_bonus(scores, bonus):
+    for i in range(len(scores)):
+        scores[i] = scores[i] + bonus
+        if scores[i] > 100:
+            scores[i] = 100
+def with_bonus(scores, bonus):
+    a = scores[:]
+    for i in range(len(a)):					utils.py
+        a[i] = a[i] + bonus
+        if a[i] > 100:
+            a[i] = 100
+    return a
+#6
+def average(*numbers):
+    if len(numbers) == 0:
+        return 0
+    return sum(numbers) / len(numbers)
+def make_course(code, **details):
+    course = {}
+    course["code"] = code
+    for key, value in details.items():
+        course[key] = value
+    return course
+
+import utils
+from utils import average
+from utils import build_username as make_user
+import utils as u                                              labs_main.py
+print(utils.add_vat(200))
+print(average(60, 70))
+print(make_user("Nigar", "Hasanova"))
+print(u.with_bonus([50, 95], 10))
+report:
+Names can have the same name. If your file has a function called average, and utils also has average, one replaces the other. Python gives no warning, and you can get wrong results.
+Tapsiriq 8:
+No | Error type  | Where                      | How I fixed it
+---+-------------+----------------------------+----------------------------------------------
+1  | SyntaxError | calculate_total definition | Added ":" at the end of the def line
+2  | Logic error | calculate_total last line  | Changed print(total) to return total because before it printed just 54.0 and geted back None so the output was Total:None
+3  | SyntaxError | describe_order definition  | Moved country="Azerbaijan" to the end
+4  | TypeError   | describe_order call        | Changed to describe_order("Ali", city="Baku")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
